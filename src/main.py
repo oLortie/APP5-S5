@@ -25,40 +25,23 @@ def etape_1(N, variance):
     plt.figure()
     plt.hist(error_angle)
     plt.title("Histogramme de l'angle")
+    plt.xlabel("Radiant")
+    plt.ylabel("Nombre d'échantillons")
 
     # c)
-    rayleigh025 = []
-    rayleigh1 = []
-    rayleigh4 = []
-    rayleigh9 = []
-    rayleigh16 = []
-
-    for i in range(N):
-        rayleigh025.append((x[i] / 0.25) * np.exp((-x[i] ** 2) / (2 * 0.25)))
-        rayleigh1.append((x[i] / 1) * np.exp((-x[i] ** 2) / (2 * 1)))
-        rayleigh4.append((x[i] / 4) * np.exp((-x[i] ** 2) / (2 * 4)))
-        rayleigh9.append((x[i] / 9) * np.exp((-x[i] ** 2) / (2 * 9)))
-        rayleigh16.append((x[i] / 16) * np.exp((-x[i] ** 2) / (2 * 16)))
-
+    sigma2 = [0.25, 1, 4, 9, 16]
+    rayleigh = [None] * 5
     plt.figure()
-    plt.plot(x, rayleigh025)
-    plt.title('1) c) Rayleigh théorique pour sigma = 0.25')
 
-    plt.figure()
-    plt.plot(x, rayleigh1)
-    plt.title('1) c) Rayleigh théorique pour sigma = 1')
+    for i in range(len(sigma2)):
+        rayleigh[i] = [None] * N
 
-    plt.figure()
-    plt.plot(x, rayleigh4)
-    plt.title('1) c) Rayleigh théorique pour sigma = 4')
+        for j in range(N):
+            rayleigh[i][j] = (x[j] / sigma2[i]) * np.exp((-x[j] ** 2) / (2 * sigma2[i]))
 
-    plt.figure()
-    plt.plot(x, rayleigh9)
-    plt.title('1) c) Rayleigh théorique pour sigma = 9')
-
-    plt.figure()
-    plt.plot(x, rayleigh16)
-    plt.title('1) c) Rayleigh théorique pour sigma = 16')
+        plt.plot(x, rayleigh[i], label=rf"$\sigma^2$={sigma2[i]}")
+    plt.legend()
+    plt.title('Rayleigh')
 
     # d), e) et g)
     plt.figure()
