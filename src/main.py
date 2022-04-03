@@ -6,10 +6,16 @@ def etape_1(N, variance):
     print("===== Étape 1 =====")
 
     # a)
+    dx = 20 / N
+    # x = np.arange(0, 1, dx)
+    x = []
+
     error_angle = [0]*N
     error_module = [0]*N
     error_module_t = [0]*N
+
     for i in range(N):
+        x.append(i * dx)
         [u1, u2] = np.random.rand(2)
         error_angle[i] = 2*np.pi*u1
         error_module[i] = np.sqrt(-2*variance*np.log(u2))
@@ -21,15 +27,38 @@ def etape_1(N, variance):
     plt.title("Histogramme de l'angle")
 
     # c)
-    # x_rayleigh = np.arange(0, 20, 20/N)
-    # rayleigh = [0]*N
-    #
-    # for i in range(len(x_rayleigh)):
-    #     rayleigh[i] = (x_rayleigh/variance)*np.exp(-x_rayleigh**2/(2*variance))
-    #
-    # plt.figure()
-    # plt.plot(x_rayleigh, rayleigh)
-    # plt.title("Courbe théorique de Rayleigh")
+    rayleigh025 = []
+    rayleigh1 = []
+    rayleigh4 = []
+    rayleigh9 = []
+    rayleigh16 = []
+
+    for i in range(N):
+        rayleigh025.append((x[i] / 0.25) * np.exp((-x[i] ** 2) / (2 * 0.25)))
+        rayleigh1.append((x[i] / 1) * np.exp((-x[i] ** 2) / (2 * 1)))
+        rayleigh4.append((x[i] / 4) * np.exp((-x[i] ** 2) / (2 * 4)))
+        rayleigh9.append((x[i] / 9) * np.exp((-x[i] ** 2) / (2 * 9)))
+        rayleigh16.append((x[i] / 16) * np.exp((-x[i] ** 2) / (2 * 16)))
+
+    plt.figure()
+    plt.plot(x, rayleigh025)
+    plt.title('1) c) Rayleigh théorique pour sigma = 0.25')
+
+    plt.figure()
+    plt.plot(x, rayleigh1)
+    plt.title('1) c) Rayleigh théorique pour sigma = 1')
+
+    plt.figure()
+    plt.plot(x, rayleigh4)
+    plt.title('1) c) Rayleigh théorique pour sigma = 4')
+
+    plt.figure()
+    plt.plot(x, rayleigh9)
+    plt.title('1) c) Rayleigh théorique pour sigma = 9')
+
+    plt.figure()
+    plt.plot(x, rayleigh16)
+    plt.title('1) c) Rayleigh théorique pour sigma = 16')
 
     # d), e) et g)
     plt.figure()
@@ -44,6 +73,7 @@ def etape_1(N, variance):
 
     return error_module, error_angle
 
+
 def etape_2(error_module, error_angle):
     print("===== Étape 2 =====")
     plt.figure()
@@ -51,6 +81,7 @@ def etape_2(error_module, error_angle):
     plt.title("Nuage de points (Étape 2)")
     plt.xlabel("Module")
     plt.ylabel("Angle")
+
 
 def etape_3(N, d_zero, phi_zero, error_module, error_angle):
     print("===== Étape 3 =====")
@@ -65,6 +96,7 @@ def etape_3(N, d_zero, phi_zero, error_module, error_angle):
     plt.title("Nuage de points (Étape 3)")
     plt.xlabel("D")
     plt.ylabel("Phi")
+
 
 def etape_4(N, d_zero, phi_zero, error_module, error_angle):
     print("===== Étape 4 =====")
