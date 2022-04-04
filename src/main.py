@@ -100,7 +100,7 @@ def step_4(N, d_zero, phi_zero, error_module, error_angle):
     d_y = [0]*N
 
     for i in range(N):
-        d_x[i] = d_zero*np.cos(np.radians(phi_zero)) + error_module[i]*np.cos(error_angle[i])
+        d_x[i] = d_zero * np.cos(np.radians(phi_zero)) + error_module[i] * np.cos(error_angle[i])
         d_y[i] = d_zero * np.sin(np.radians(phi_zero)) + error_module[i] * np.sin(error_angle[i])
 
     plt.figure()
@@ -149,6 +149,7 @@ def step_5(d_x, d_y):
 
 
 def step_8(N, d_x, d_y):
+    print("===== Étape 8 =====")
     mean_x = np.mean(d_x)
     mean_y = np.mean(d_y)
 
@@ -160,6 +161,31 @@ def step_8(N, d_x, d_y):
     c_matrix = 1/N*np.matmul(x_matrix, np.transpose(x_matrix))
 
     print(c_matrix)
+    return c_matrix
+
+
+def step_9(c_matrix):
+    print("===== Étape 9 =====")
+    S = 5.9915
+    T = c_matrix[0][0] + c_matrix[1][1]
+    detC = c_matrix[0][0] * c_matrix[1][1] - c_matrix[1][0] * c_matrix[0][1]
+
+    lambda1 = T / 2 + np.sqrt((T ** 2) / 4 - detC)
+    lambda2 = T / 2 - np.sqrt((T ** 2) / 4 - detC)
+
+    e1 = [c_matrix[1][0], lambda1 - c_matrix[0][0]]
+    e2 = [lambda2 - c_matrix[1][1], c_matrix[0][1]]
+
+    L1 = 2 * np.sqrt(lambda1 * S)
+    L2 = 2 * np.sqrt(lambda2 * S)
+
+    teta1 = np.arctan(e1[1] / e1[0])
+    teta2 = np.arctan(e2[1] / e2[0])
+
+    print('L1 = ' + str(L1))
+    print('L2 = ' + str(L2))
+    print('Teta 1 = ' + str(teta1))
+    print('Teta 2 = ' + str(teta2))
 
 
 if __name__ == '__main__':
@@ -195,6 +221,14 @@ if __name__ == '__main__':
     # step_5(d_x3, d_y3)
     # step_5(d_x4, d_y4)
 
-    step_8(N, d_x1, d_y1)
+    c_matrix_1 = step_8(N, d_x1, d_y1)
+    # c_matrix_2 = step_8(N, d_x2, d_y2)
+    # c_matrix_3 = step_8(N, d_x3, d_y3)
+    # c_matrix_4 = step_8(N, d_x4, d_y4)
+
+    step_9(c_matrix_1)
+    # step_9(c_matrix_2)
+    # step_9(c_matrix_3)
+    # step_9(c_matrix_4)
 
     plt.show()
