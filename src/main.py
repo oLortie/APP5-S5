@@ -148,6 +148,20 @@ def step_5(d_x, d_y):
     print("Écart-type échantillon de Dy: ", std_dev_dy)
 
 
+def step_8(N, d_x, d_y):
+    mean_x = np.mean(d_x)
+    mean_y = np.mean(d_y)
+
+    d_x_null_mean = d_x - mean_x
+    d_y_null_mean = d_y - mean_y
+
+    x_matrix = [d_x_null_mean, d_y_null_mean]
+
+    c_matrix = 1/N*np.matmul(x_matrix, np.transpose(x_matrix))
+
+    print(c_matrix)
+
+
 if __name__ == '__main__':
     N = 10000
 
@@ -180,5 +194,7 @@ if __name__ == '__main__':
     # step_5(d_x2, d_y2)
     # step_5(d_x3, d_y3)
     # step_5(d_x4, d_y4)
+
+    step_8(N, d_x1, d_y1)
 
     plt.show()
