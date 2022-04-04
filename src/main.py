@@ -85,7 +85,8 @@ def step_3(N, d_zero, phi_zero, error_module, error_angle):
     phi = [0]*N
     for i in range(N):
         d[i] = d_zero + error_module[i]*np.cos(error_angle[i])
-        phi[i] = np.radians(phi_zero) + error_module[i]*np.sin(error_angle[i])
+        phi[i] = phi_zero + error_module[i]*np.sin(error_angle[i])
+        phi[i] = np.radians(phi[i])
 
     plt.figure()
     plt.scatter(d, phi)
