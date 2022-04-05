@@ -125,15 +125,28 @@ def step_4(N, d_zero, phi_zero, error_module, error_angle):
     return d_x, d_y
 
 
-# TODO : Il manque la courbe de fréquence relative à afficher
-def step_5(d_x, d_y):
+def step_5(d_x, d_y, d_zero, phi_zero):
     print("===== Étape 5 =====")
     mean_dx = np.mean(d_x)
     std_dev_dx = np.std(d_x)
 
-    plt.figure()
-    plt.hist(d_x)
-    plt.title("Histogramme de Dx")
+    fig, ax1 = plt.subplots()
+    ax1.set_title("Étape 5: Histogramme de Dx avec D0 = " + str(d_zero) +  " Phi0 = " + str(phi_zero))
+    freq_relative = ax1.hist(d_x)
+    ax1.set_ybound(0, 3000)
+    ax1.set_ylabel("Nombre d'échantillon")
+    ax1.set_xlabel("Distance axiale en X")
+
+    freq_relative_x = [None] * (len(freq_relative[1]) - 1)
+    for i in range(len(freq_relative[1]) - 1):
+        freq_relative_x[i] = (freq_relative[1][i] + freq_relative[1][i + 1]) / 2
+        freq_relative[0][i] = freq_relative[0][i] / 100
+
+    ax2 = ax1.twinx()
+    ax2.plot(freq_relative_x, freq_relative[0], color='r')
+    ax2.set_ybound(0, 30)
+    ax2.set_ylabel("Fréquences relatives (%)", color='r')
+    ax2.grid()
 
     print("Moyenne échantillon de Dx: ", mean_dx)
     print("Écart-type échantillon de Dx: ", std_dev_dx)
@@ -141,9 +154,23 @@ def step_5(d_x, d_y):
     mean_dy = np.mean(d_y)
     std_dev_dy = np.std(d_y)
 
-    plt.figure()
-    plt.hist(d_y)
-    plt.title("Histogramme de Dy")
+    fig, ax1 = plt.subplots()
+    ax1.set_title("Étape 5: Histogramme de Dy avec D0 = " + str(d_zero) +  " Phi0 = " + str(phi_zero))
+    freq_relative = ax1.hist(d_y)
+    ax1.set_ybound(0, 3000)
+    ax1.set_ylabel("Nombre d'échantillon")
+    ax1.set_xlabel("Distance axiale en Y")
+
+    freq_relative_x = [None] * (len(freq_relative[1]) - 1)
+    for i in range(len(freq_relative[1]) - 1):
+        freq_relative_x[i] = (freq_relative[1][i] + freq_relative[1][i + 1]) / 2
+        freq_relative[0][i] = freq_relative[0][i] / 100
+
+    ax2 = ax1.twinx()
+    ax2.plot(freq_relative_x, freq_relative[0], color='r')
+    ax2.set_ybound(0, 30)
+    ax2.set_ylabel("Fréquences relatives (%)", color='r')
+    ax2.grid()
 
     print("Moyenne échantillon de Dy: ", mean_dy)
     print("Écart-type échantillon de Dy: ", std_dev_dy)
@@ -217,10 +244,10 @@ if __name__ == '__main__':
     # d_x3, d_y3 = step_4(N, d_zero2, phi_zero1, error_module2, error_angle2)
     # d_x4, d_y4 = step_4(N, d_zero2, phi_zero2, error_module2, error_angle2)
 
-    step_5(d_x1, d_y1)
-    # step_5(d_x2, d_y2)
-    # step_5(d_x3, d_y3)
-    # step_5(d_x4, d_y4)
+    step_5(d_x1, d_y1, d_zero1, phi_zero1)
+    # step_5(d_x2, d_y2, d_zero1, phi_zero2)
+    # step_5(d_x3, d_y3, d_zero2, phi_zero1)
+    # step_5(d_x4, d_y4, d_zero2, phi_zero2)
 
     c_matrix_1 = step_8(N, d_x1, d_y1)
     # c_matrix_2 = step_8(N, d_x2, d_y2)
