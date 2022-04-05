@@ -41,7 +41,7 @@ def step_1(N, variance):
 
     plt.figure()
     plt.plot(error_angle)
-    plt.title("Angle de l'erreur (variance = " + str(variance) + ")")
+    plt.title("Angle de l'erreur")
     plt.xlabel("Numéro de l'échantillon")
     plt.ylabel("Angle (radians)")
 
@@ -54,7 +54,7 @@ def step_1(N, variance):
     # b)
     plt.figure()
     plt.hist(error_angle)
-    plt.title("Histogramme de l'angle (variance = " + str(variance) + ")")
+    plt.title("Histogramme de l'angle")
     plt.xlabel("Angle (radians)")
     plt.ylabel("Nombre d'échantillons")
 
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     # error_module2, error_angle2 = step_1(N, variance2)
 
     step_2(error_module1, error_angle1, variance1)
-    # step_2(error_module2, error_angle2, variance2)
+    #step_2(error_module2, error_angle2, variance2)
 
     step_3(N, d_zero1, phi_zero1, error_module1, error_angle1)
     # step_3(N, d_zero1, phi_zero2, error_module1, error_angle1)
